@@ -1,4 +1,4 @@
-name: "tfmr"
+name: "tfmr installer"
 description: "Install tfmr - Resolve Terraform module dependencies recursively"
 author: "mkusaka"
 
