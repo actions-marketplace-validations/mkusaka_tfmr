@@ -1,4 +1,4 @@
-module github.com/mkusaka/terraform-module-resolve
+module github.com/mkusaka/tfmr
 
 go 1.25
 

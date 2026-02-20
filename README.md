@@ -1,4 +1,4 @@
-# terraform-module-resolve
+# tfmr
 
 A CLI tool to analyze Terraform modules and list all related files, including files from local module dependencies.
 
@@ -13,15 +13,15 @@ A CLI tool to analyze Terraform modules and list all related files, including fi
 ## Installation
 
 ```bash
-go install github.com/mkusaka/terraform-module-resolve@latest
+go install github.com/mkusaka/tfmr@latest
 ```
 
 Or build from source:
 
 ```bash
-git clone https://github.com/mkusaka/terraform-module-resolve.git
-cd terraform-module-resolve
-go build -o terraform-module-resolve
+git clone https://github.com/mkusaka/tfmr.git
+cd tfmr
+go build -o tfmr
 ```
 
 ## Usage
@@ -31,7 +31,7 @@ go build -o terraform-module-resolve
 Analyze a Terraform module and output JSON:
 
 ```bash
-terraform-module-resolve /path/to/terraform/module
+tfmr /path/to/terraform/module
 ```
 
 Output:
@@ -72,7 +72,7 @@ Output:
 Output only file paths, one per line:
 
 ```bash
-terraform-module-resolve --files-only /path/to/terraform/module
+tfmr --files-only /path/to/terraform/module
 ```
 
 ### Filter by Changed Files
@@ -80,7 +80,7 @@ terraform-module-resolve --files-only /path/to/terraform/module
 Filter output to only files in modules affected by changes from stdin:
 
 ```bash
-git diff --name-only | terraform-module-resolve --files-only --filter-stdin /path/to/terraform/module
+git diff --name-only | tfmr --files-only --filter-stdin /path/to/terraform/module
 ```
 
 ### Check if Module is Affected
@@ -88,7 +88,7 @@ git diff --name-only | terraform-module-resolve --files-only --filter-stdin /pat
 Check if a module is affected by changed files. Useful for conditional CI/CD execution:
 
 ```bash
-git diff --name-only | terraform-module-resolve --affected /path/to/terraform/module
+git diff --name-only | tfmr --affected /path/to/terraform/module
 ```
 
 Exit codes:
@@ -99,7 +99,7 @@ Exit codes:
 Example in CI:
 
 ```bash
-if git diff --name-only origin/main | terraform-module-resolve --affected ./terraform/dev; then
+if git diff --name-only origin/main | tfmr --affected ./terraform/dev; then
   terraform plan
 else
   echo "No changes affecting this module"
@@ -122,7 +122,7 @@ fi
 - name: Check if module affected
   id: check
   run: |
-    git diff --name-only origin/main | terraform-module-resolve --affected ./terraform/production
+    git diff --name-only origin/main | tfmr --affected ./terraform/production
   continue-on-error: true
 
 - name: Terraform Plan
@@ -133,13 +133,13 @@ fi
 ### Get All Files for Static Analysis
 
 ```bash
-terraform-module-resolve --files-only ./terraform/module | xargs tflint
+tfmr --files-only ./terraform/module | xargs tflint
 ```
 
 ### List Changed Module Files
 
 ```bash
-git diff --name-only HEAD~1 | terraform-module-resolve --files-only --filter-stdin ./terraform/module
+git diff --name-only HEAD~1 | tfmr --files-only --filter-stdin ./terraform/module
 ```
 
 ## License
