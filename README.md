@@ -12,11 +12,47 @@ A CLI tool to analyze Terraform modules and list all related files, including fi
 
 ## Installation
 
+### GitHub Action (recommended for CI/CD)
+
+```yaml
+- uses: mkusaka/tfmr@v1
+# tfmr is now available in PATH
+- run: git diff --name-only origin/main | tfmr --affected ./terraform/production
+```
+
+Pin to a specific version:
+
+```yaml
+- uses: mkusaka/tfmr@v1
+  with:
+    version: v1.2.3
+```
+
+### Pre-built binaries
+
+Download the latest binary for your platform from [GitHub Releases](https://github.com/mkusaka/tfmr/releases).
+
+```bash
+# macOS (Apple Silicon)
+curl -sL https://github.com/mkusaka/tfmr/releases/latest/download/tfmr_darwin_arm64.tar.gz | tar -xz
+sudo mv tfmr /usr/local/bin/
+
+# macOS (Intel)
+curl -sL https://github.com/mkusaka/tfmr/releases/latest/download/tfmr_darwin_amd64.tar.gz | tar -xz
+sudo mv tfmr /usr/local/bin/
+
+# Linux (amd64)
+curl -sL https://github.com/mkusaka/tfmr/releases/latest/download/tfmr_linux_amd64.tar.gz | tar -xz
+sudo mv tfmr /usr/local/bin/
+```
+
+### go install
+
 ```bash
 go install github.com/mkusaka/tfmr@latest
 ```
 
-Or build from source:
+### Build from source
 
 ```bash
 git clone https://github.com/mkusaka/tfmr.git
@@ -96,16 +132,6 @@ Exit codes:
 - `1`: Module is not affected
 - `2`: Error occurred
 
-Example in CI:
-
-```bash
-if git diff --name-only origin/main | tfmr --affected ./terraform/dev; then
-  terraform plan
-else
-  echo "No changes affecting this module"
-fi
-```
-
 ## Options
 
 | Flag | Description |
@@ -119,15 +145,24 @@ fi
 ### CI/CD: Run Terraform Only for Affected Modules
 
 ```yaml
-- name: Check if module affected
-  id: check
-  run: |
-    git diff --name-only origin/main | tfmr --affected ./terraform/production
-  continue-on-error: true
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-- name: Terraform Plan
-  if: steps.check.outcome == 'success'
-  run: terraform plan
+      - uses: mkusaka/tfmr@v1
+
+      - name: Check if module affected
+        id: check
+        run: git diff --name-only origin/main | tfmr --affected ./terraform/production
+        continue-on-error: true
+
+      - name: Terraform Plan
+        if: steps.check.outcome == 'success'
+        run: terraform plan
 ```
 
 ### Get All Files for Static Analysis
@@ -141,6 +176,19 @@ tfmr --files-only ./terraform/module | xargs tflint
 ```bash
 git diff --name-only HEAD~1 | tfmr --files-only --filter-stdin ./terraform/module
 ```
+
+## Releasing
+
+Use the release script to bump the version and trigger the release workflow:
+
+```bash
+./scripts/release.sh patch   # 1.0.0 -> 1.0.1
+./scripts/release.sh minor   # 1.0.1 -> 1.1.0
+./scripts/release.sh major   # 1.1.0 -> 2.0.0
+./scripts/release.sh v1.2.3  # explicit version
+```
+
+The script creates and pushes a git tag, which triggers GitHub Actions to build binaries for all platforms via [goreleaser](https://goreleaser.com) and publish a GitHub Release.
 
 ## License
 
