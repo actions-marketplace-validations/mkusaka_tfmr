@@ -15,7 +15,7 @@ A CLI tool to analyze Terraform modules and list all related files, including fi
 ### GitHub Action (recommended for CI/CD)
 
 ```yaml
-- uses: mkusaka/terraform-module-resolve@v1
+- uses: mkusaka/tfmr@v1
 # tfmr is now available in PATH
 - run: git diff --name-only origin/main | tfmr --affected ./terraform/production
 ```
@@ -23,26 +23,26 @@ A CLI tool to analyze Terraform modules and list all related files, including fi
 Pin to a specific version:
 
 ```yaml
-- uses: mkusaka/terraform-module-resolve@v1
+- uses: mkusaka/tfmr@v1
   with:
     version: v1.2.3
 ```
 
 ### Pre-built binaries
 
-Download the latest binary for your platform from [GitHub Releases](https://github.com/mkusaka/terraform-module-resolve/releases).
+Download the latest binary for your platform from [GitHub Releases](https://github.com/mkusaka/tfmr/releases).
 
 ```bash
 # macOS (Apple Silicon)
-curl -sL https://github.com/mkusaka/terraform-module-resolve/releases/latest/download/tfmr_darwin_arm64.tar.gz | tar -xz
+curl -sL https://github.com/mkusaka/tfmr/releases/latest/download/tfmr_darwin_arm64.tar.gz | tar -xz
 sudo mv tfmr /usr/local/bin/
 
 # macOS (Intel)
-curl -sL https://github.com/mkusaka/terraform-module-resolve/releases/latest/download/tfmr_darwin_amd64.tar.gz | tar -xz
+curl -sL https://github.com/mkusaka/tfmr/releases/latest/download/tfmr_darwin_amd64.tar.gz | tar -xz
 sudo mv tfmr /usr/local/bin/
 
 # Linux (amd64)
-curl -sL https://github.com/mkusaka/terraform-module-resolve/releases/latest/download/tfmr_linux_amd64.tar.gz | tar -xz
+curl -sL https://github.com/mkusaka/tfmr/releases/latest/download/tfmr_linux_amd64.tar.gz | tar -xz
 sudo mv tfmr /usr/local/bin/
 ```
 
@@ -55,8 +55,8 @@ go install github.com/mkusaka/tfmr@latest
 ### Build from source
 
 ```bash
-git clone https://github.com/mkusaka/terraform-module-resolve.git
-cd terraform-module-resolve
+git clone https://github.com/mkusaka/tfmr.git
+cd tfmr
 go build -o tfmr
 ```
 
@@ -153,7 +153,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: mkusaka/terraform-module-resolve@v1
+      - uses: mkusaka/tfmr@v1
 
       - name: Check if module affected
         id: check
