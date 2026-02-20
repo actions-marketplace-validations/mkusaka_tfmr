@@ -15,7 +15,7 @@ A CLI tool to analyze Terraform modules and list all related files, including fi
 ### GitHub Action (recommended for CI/CD)
 
 ```yaml
-- uses: mkusaka/tfmr@v1
+- uses: mkusaka/tfmr@v0
 # tfmr is now available in PATH
 - run: git diff --name-only origin/main | tfmr --affected ./terraform/production
 ```
@@ -23,7 +23,7 @@ A CLI tool to analyze Terraform modules and list all related files, including fi
 Pin to a specific version:
 
 ```yaml
-- uses: mkusaka/tfmr@v1
+- uses: mkusaka/tfmr@v0
   with:
     version: v1.2.3
 ```
@@ -153,7 +153,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: mkusaka/tfmr@v1
+      - uses: mkusaka/tfmr@v0
 
       - name: Check if module affected
         id: check
