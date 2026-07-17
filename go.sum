@@ -18,6 +18,8 @@ github.com/hashicorp/terraform-config-inspect v0.0.0-20260210152655-f4be3ba97d94
 github.com/hashicorp/terraform-config-inspect v0.0.0-20260210152655-f4be3ba97d94/go.mod h1:Gz/z9Hbn+4KSp8A2FBtNszfLSdT2Tn/uAKGuVqqWmDI=
 github.com/hashicorp/terraform-config-inspect v0.0.0-20260224005459-813a97530220 h1:v0h6j7IMgA24b8aWG5+d6WStIP9G8e/p0DKK3Bmk7YQ=
 github.com/hashicorp/terraform-config-inspect v0.0.0-20260224005459-813a97530220/go.mod h1:Gz/z9Hbn+4KSp8A2FBtNszfLSdT2Tn/uAKGuVqqWmDI=
+github.com/hashicorp/terraform-config-inspect v0.0.0-20260709150029-2fb54c236733 h1:e1CDVoHQG7iqZvWK6EY7gWOVg70z9zDy6PseAAoSEJY=
+github.com/hashicorp/terraform-config-inspect v0.0.0-20260709150029-2fb54c236733/go.mod h1:Gz/z9Hbn+4KSp8A2FBtNszfLSdT2Tn/uAKGuVqqWmDI=
 github.com/mitchellh/go-wordwrap v1.0.1 h1:TLuKupo69TCn6TQSyGxwI1EblZZEsQ0vMlAFQflz0v0=
 github.com/mitchellh/go-wordwrap v1.0.1/go.mod h1:R62XHJLzvMFRBbcrT7m7WgmE1eOyTSsCt+hzestvNj0=
 github.com/zclconf/go-cty v1.17.0 h1:seZvECve6XX4tmnvRzWtJNHdscMtYEx5R7bnnVyd/d0=

@@ -4,7 +4,7 @@ go 1.25
 
 toolchain go1.26.5
 
-require github.com/hashicorp/terraform-config-inspect v0.0.0-20260224005459-813a97530220
+require github.com/hashicorp/terraform-config-inspect v0.0.0-20260709150029-2fb54c236733
 
 require (
 	github.com/agext/levenshtein v1.2.3 // indirect
