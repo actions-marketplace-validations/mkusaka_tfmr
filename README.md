@@ -23,7 +23,7 @@ A CLI tool to analyze Terraform modules and list all related files, including fi
 Pin to a specific version:
 
 ```yaml
-- uses: mkusaka/tfmr@v0
+- uses: mkusaka/tfmr@v1.2.3
   with:
     version: v1.2.3
 ```
@@ -189,6 +189,14 @@ Use the release script to bump the version and trigger the release workflow:
 ```
 
 The script creates and pushes a git tag, which triggers GitHub Actions to build binaries for all platforms via [goreleaser](https://goreleaser.com) and publish a GitHub Release.
+
+Only full semantic version tags (`vX.Y.Z`) are published as GitHub Releases. The script also updates the moving major action tag (`vX`) so workflows can use refs such as `mkusaka/tfmr@v0`, but that tag is intentionally kept as a tag-only ref and must not have a GitHub Release attached to it. This keeps release-specific tags immutable while preserving the normal GitHub Action major-version ref.
+
+After this workflow is merged, enable release immutability for the repository in GitHub settings or with:
+
+```bash
+gh api -X PUT repos/mkusaka/tfmr/immutable-releases
+```
 
 ## License
 

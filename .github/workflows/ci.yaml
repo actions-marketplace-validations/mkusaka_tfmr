@@ -1,21 +1,19 @@
 name: CI
-
 on:
   push:
     branches:
       - main
   pull_request:
-
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - uses: actions/setup-go@4b73464bb391d4059bd26b0524d20df3927bd417 # v6.3.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: go.mod
-
       - name: Check formatting
         run: |
           if [ -n "$(gofmt -l .)" ]; then
@@ -23,9 +21,10 @@ jobs:
             gofmt -l .
             exit 1
           fi
-
       - name: Run tests
         run: go test -v ./...
-
       - name: Build
         run: go build -o tfmr
+    permissions: {}
+    timeout-minutes: 60
+permissions: {}
